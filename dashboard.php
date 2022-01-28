@@ -1,7 +1,9 @@
 <?php
 session_start();
-if ($_SESSION['jabatan']=="petugas") {
+if (isset($_SESSION['status'])) {
     include('koneksi.php');
+    $nama       = $_SESSION['nama'];
+    $jabatan    = $_SESSION['jabatan'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +16,11 @@ if ($_SESSION['jabatan']=="petugas") {
     <link rel="stylesheet" href="bootstrap-5.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome-free-5.15.4-web/css/all.min.css">
     <style>
-        table{
+       table{
             max-width: 100%;
             font-size : 14px;
+      
+       
         }
     </style>
 </head>
@@ -25,15 +29,15 @@ if ($_SESSION['jabatan']=="petugas") {
         <div class="row">
             <div class="col">
                 <br>
-                <h1><center>Perpustakaan SMK Taruna Bangsa</center></h1>
+                <h1><center>Perpustakaan TB</center></h1>
                 <br>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <nav class="navbar navbar-expand-lg navbar-primary bg-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">Navbar</a>
+                        <a class="navbar-brand" href="#">D29</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
@@ -42,11 +46,27 @@ if ($_SESSION['jabatan']=="petugas") {
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/perpustakaan/dashboard.php">Home</a>
                             </li>
+
+                        <!------- Struktur Kondisi untuk memunculkan menu petugas, sesuai jabatannya---------------------------------------------------------------------->
+                            <?php
+                                if ($jabatan == "Kepala Perpustakaan"){
+                            ?>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="?page=petugas">Petugas</a>
+                            </li>
+                            <?php
+                                }
+                            ?>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------->
+                        
                             <li class="nav-item">
                                 <a class="nav-link" href="?page=anggota">Anggota</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="?page=buku">Buku</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="?page=petugas">petugas</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,9 +85,9 @@ if ($_SESSION['jabatan']=="petugas") {
                         </ul>
                         <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
                         </form>
-                        <a href="?page=logout"><button class="btn btn-danger">Logout</button></a>
+                        <a href="?page=logout"><button class="btn btn-outline-danger">Logout</button></a>
                         </div>
                     </div>
                 </nav>
@@ -88,20 +108,31 @@ if ($_SESSION['jabatan']=="petugas") {
                         include('anggota-edit.php');
                     }elseif($_GET['page']=="anggota-edit-proses"){
                         include('anggota-edit-proses.php');
+                    }elseif($_GET['page']=="petugas") {
+                        include('petugas.php');
+                    }elseif($_GET['page']=="petugas-delete"){
+                        include('petugas-delete.php');
+                    }elseif($_GET['page']=="petugas-insert"){
+                        include('petugas-insert.php');
+                    }elseif($_GET['page']=="petugas-edit"){
+                        include('petugas-edit.php');
+                    }elseif($_GET['page']=="petugas-edit-proses"){
+                            include('petugas-edit-proses.php');
                     }elseif($_GET['page']=="logout"){
                         include('logout.php');
                     }else{
                         echo "<h1>Halaman yang anda cari tidak ditemukan!";
                     }
                 }else{
-                    echo "<br><br><center><h1>Selamat Datang Administrator</h1></center><br><br>";
+                    echo "<br><br><center><h1>Selamat Datang ".$nama."</h1></center>";
+                    echo "<center><h1>".$jabatan."</h1></center><br><br>";
                 }
                 ?>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <center>@ FADHLIHAN 2021</center>
+                <center>@ FADHLIHAN 2K22</center>
             </div>
         </div>
     </div>

@@ -1,45 +1,36 @@
-<!-- Proses Update -->
 <?php
-    $id_anggota = $_POST['id_anggota'];
-    $nis = $_POST['nis'];
-    $nama = $_POST['nama'];
-    $jk = $_POST['jk'];
-    $tempat_lahir = $_POST['tempat_lahir'];
-    $tanggal_lahir = $_POST['tanggal_lahir'];
-    $id_kelas = $_POST['id_kelas'];
-    $id_jurusan = $_POST['id_jurusan'];
-    $nomor_telepon = $_POST['nomor_telepon'];
-    $alamat = $_POST['alamat'];
+include('koneksi.php');
+if (isset($_GET['save-edit'])) {
+    $id            = $_POST['id'];
+    $nis            = $_POST['nis'];
+    $nama           = $_POST['nama'];
+    $jk             = $_POST['jk'];
+    $tempat_lahir      = $_POST['tpt_lahir'];
+    $tanggal_lahir      = $_POST['tgl_lahir'];
+    $id_kelas       = $_POST['id_kelas'];
+    $id_jurusan     = $_POST['id_jurusan'];
+    $nomor_telepon            = $_POST['tlp'];
+    $alamat         = $_POST['alamat'];
 
-    $query_update = mysqli_query($konek,"UPDATE anggota SET nis = '$nis', 
-                                                            nama = '$nama',
-                                                            jk = '$jk',
-                                                            tempat_lahir = '$tpt_lahir', 
-                                                            tanggal_lahir = '$tgl_lahir', 
-                                                            id_kelas = '$kelas', 
-                                                            id_jurusan = '$jurusan', 
-                                                            nomor_telepon = '$tlp', 
-                                                            alamat = '$alamat'
-                                                            WHERE id_anggota = '$id'");
+    $query_update = mysqli_query($konek,"UPDATE anggota 
+    SET nis         = '$nis',
+        nama        = '$nama',     
+        jk          = '$jk',    
+        tpt_lahir   = '$tempat_lahir',  
+        tgl_lahir   = '$tanggal_lahir',
+        id_kelas    = '$id_kelas',       
+        id_jurusan  = '$id_jurusan',     
+        tlp         = '$nomor_telepon',
+        alamat      = '$alamat'
+    WHERE id_anggota = '$id'");
 
-if($query_update)
-    {
+    if ($query_update) {
         ?>
-            <div class="alert alert-success">
-                Data Berhasil Diupdate !!!
-            </div>
-        <?php
-        header('refresh:2; URL=http://localhost/6_PASGANJIL2021_XIIRPL1/dashboard.php?page=anggota');
-    }
-    else
-    {
-        ?>
-            <div class="alert alert-danger">
-                Data GAGAL Diupdate !!!!!!!!!
-            </div>
+        <script>
+            alert('Data Berhasil Diupdate')
+            window.location.href='dashboard.php?page=anggota';
+        </script>
         <?php
     }
-
-////End of proses delete data/////////////////////////////////////////////////////////////////////////
-
+}
 ?>

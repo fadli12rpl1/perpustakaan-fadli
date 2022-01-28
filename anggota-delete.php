@@ -7,10 +7,10 @@ if (isset($_GET['delete'])) {
     if($query_delete){
         ?>
             <script>
-                alert("Data Berhasil Di Delete");
-            </script>
+            alert('Data Berhasil Dihapus')
+            window.location.href='dashboard.php?page=anggota';
+        </script>
         <?php
-        header('refresh:0; URL=http://localhost/6_PASGANJIL2021_XIIRPL1/dashboard.php?page=anggota');
     }
 }
 ////End of proses delete data/////////////////////////////////////////////////////////////////////////

@@ -1,19 +1,19 @@
 <?php
-    if ($_SESSION['jabatan']=='petugas') {
+    if (isset($_SESSION['status'])) {
 ?>
 <center><h1 class="mt-4 mb-3">Data Anggota</h1></center>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#tambahanggota">
+<button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#tambahanggota">
   Tambah Data
 </button>
-<table class="table table-striped table-hover">
+<table class="table table-dark table-hover">
     <tr class="text-center">
         <th>No</th>
         <th>NIS</th>
         <th>Nama</th>
         <th>Gender</th>
-        <th>Tpt Lahir</th>
         <th>Tgl Lahir</th>
+        <th>Tpt Lahir</th>
         <th>Kelas</th>
         <th>Jurusan</td>
         <th>No. Tlp</th>
@@ -27,16 +27,34 @@
     ?>
     <tr style="font-size: 11px; table-layout: fixed">
         <td align="center" valign="middle"><?php echo $no; ?></td>
-        <td valign="middle"><?php echo $row['nis']; ?></td>
-        <td valign="middle"><?php echo $row['nama']; ?></td>
+        <td align="center" valign="middle"><?php echo $row['nis']; ?></td>
+        <td align="center" valign="middle"><?php echo $row['nama']; ?></td>
         <td align="center" valign="middle"><?php echo $row['jk']=="L"?"Laki-laki":"Perempuan"; ?></td>
-        <td valign="middle"><?php echo $row['tempat_lahir']; ?></td>
-        <td valign="middle"><?php echo $row['tanggal_lahir']; ?></td>
-        <td valign="middle"><?php echo $row['id_kelas']; ?></td>
-        <td valign="middle"><?php echo $row['id_jurusan']; ?></td>
-        <td valign="middle"><?php echo $row['nomor_telepon']; ?></td>
-        <td valign="middle"><?php echo $row['alamat']; ?></td>
-        <td valign="middle">
+        <td align="center" valign="middle"><?php echo $row['tgl_lahir']; ?></td>
+        <td align="center" valign="middle"><?php echo $row['tpt_lahir']; ?></td>
+
+        <td align="center" valign="middle">
+            <?php
+             $idkelas = $row['id_kelas']; 
+             $querykelas = mysqli_query($konek, "SELECT * FROM kelas where id_kelas = '$idkelas'");
+             foreach ($querykelas as $kelas) {
+                 echo $kelas['nama_kelas'] ;
+             }
+            ?>
+        </td>
+        <td align="center" valign="middle">
+            <?php
+             $idjurusan = $row['id_jurusan']; 
+             $queryjurusan = mysqli_query($konek, "SELECT * FROM jurusan where id_jurusan = '$idjurusan'");
+             foreach ($queryjurusan as $jurusan) {
+                echo $jurusan['nama_jurusan'] ;
+             }
+           ?>
+        </td>
+
+        <td align="center" valign="middle"><?php echo $row['tlp']; ?></td>
+        <td align="center" valign="middle"><?php echo $row['alamat']; ?></td>
+        <td align="center" valign="middle">
             <a href="?page=anggota-delete&delete=&id=<?php echo $row['id_anggota'];?>">
                 <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
             </a>
@@ -61,7 +79,7 @@
         </div>
         <div class="modal-body">
             <form action="?page=anggota-insert" method="post">
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <input class="form-control" type="text" name="nis" placeholder="Nomor Induk Siswa" required>
                 </div>
                 <div class="form-group mt-2">
@@ -83,9 +101,6 @@
                 <div class="form-group mt-2">
                     <select class="form-control" name="kelas" required>
                         <option value="">--Pilih Kelas--</option>
-                        <option value="x">x</option>
-                        <option value="xi">xi</option>
-                        <option value="xii">xii</option>
                         <?php
                         $query = mysqli_query($konek,"SELECT * FROM kelas");
                         foreach ($query as $row) {
@@ -101,10 +116,6 @@
                 <div class="form-group mt-2">
                     <select class="form-control" name="jurusan" required>
                         <option value="">--Pilih Jurusan--</option>
-                        <option value="TKR">TKR</option>
-                        <option value="RPL">RPL</option>
-                        <option value="TAV">TAV</option>
-                        <option value="TITL">TITL</option>
                         <?php
                         $query = mysqli_query($konek,"SELECT * FROM jurusan");
                         foreach ($query as $row) {
